@@ -6,14 +6,21 @@ phases:
       java: openjdk11
   pre_build:
     commands:
+      - echo Logging in to Amazon ECR...
+      - $(aws ecr get-login --no-include-email --region us-east-1)
       - echo Nothing to do in the pre_build phase...
   build:
     commands:
       - echo Build started on `date`
       - mvn install
+      - echo building docker image ...
+      - docker build -t poccap .
+      - docker tag poccap:latest 637373963597.dkr.ecr.us-east-1.amazonaws.com/poccap:latest
   post_build:
     commands:
       - echo Build completed on `date`
+      - echo pushing the docker image ...
+      - docker push 637373963597.dkr.ecr.us-east-1.amazonaws.com/poccap:latest
 artifacts:
   files:
     - target/messageUtil-1.0.jar
