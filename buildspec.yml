@@ -19,7 +19,7 @@ phases:
   post_build:
     commands:
       - echo Build completed on `date`
-      - echo pushing the docker image ...
+      - echo pushing the docker image ..
       - docker push 637373963597.dkr.ecr.us-east-1.amazonaws.com/poccap:latest
 artifacts:
   files:
